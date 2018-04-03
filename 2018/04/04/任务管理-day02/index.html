@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>任务管理-day02 | 任务管理开发记录</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上次已完成页面，下面将完成点击登录按钮后的部分1.页面中的 action=”login/dologin” 表示将数据提交到 控制器 Login 的 dologin 方法里。所以在application/controller/Login.php里增加 dologin1234567891011121314&amp;lt;?phpdefined(&apos;BASEPATH&apos;) OR exit(&apos;No direct sc">
+<meta name="keywords" content="任务管理,PHP,CodeIgniter">
+<meta property="og:type" content="article">
+<meta property="og:title" content="任务管理-day02">
+<meta property="og:url" content="http://task.fenv.net/2018/04/04/任务管理-day02/index.html">
+<meta property="og:site_name" content="任务管理开发记录">
+<meta property="og:description" content="上次已完成页面，下面将完成点击登录按钮后的部分1.页面中的 action=”login/dologin” 表示将数据提交到 控制器 Login 的 dologin 方法里。所以在application/controller/Login.php里增加 dologin1234567891011121314&amp;lt;?phpdefined(&apos;BASEPATH&apos;) OR exit(&apos;No direct sc">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://task.fenv.net/20180404071856/d02-01.png">
+<meta property="og:updated_time" content="2018-04-03T23:37:30.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="任务管理-day02">
+<meta name="twitter:description" content="上次已完成页面，下面将完成点击登录按钮后的部分1.页面中的 action=”login/dologin” 表示将数据提交到 控制器 Login 的 dologin 方法里。所以在application/controller/Login.php里增加 dologin1234567891011121314&amp;lt;?phpdefined(&apos;BASEPATH&apos;) OR exit(&apos;No direct sc">
+<meta name="twitter:image" content="http://task.fenv.net/20180404071856/d02-01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="任务管理开发记录" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">任务管理开发记录</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://task.fenv.net"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-任务管理-day02" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/04/任务管理-day02/" class="article-date">
+  <time datetime="2018-04-03T23:18:56.000Z" itemprop="datePublished">2018-04-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      任务管理-day02
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>上次已完成页面，下面将完成点击登录按钮后的部分<br>1.页面中的 action=”login/dologin” 表示将数据提交到 控制器 Login 的 dologin 方法里。所以在application/controller/Login.php里增加 dologin<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">defined(<span class="string">'BASEPATH'</span>) <span class="keyword">OR</span> <span class="keyword">exit</span>(<span class="string">'No direct script access allowed'</span>);</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span> <span class="keyword">extends</span> <span class="title">CI_Controller</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">index</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">$this</span>-&gt;load-&gt;view(<span class="string">'log_in'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">dologin</span><span class="params">()</span></span>&#123;</span><br><span class="line">        $username = <span class="keyword">$this</span>-&gt;input-&gt;post(<span class="string">'username'</span>);</span><br><span class="line">        $password = <span class="keyword">$this</span>-&gt;input-&gt;post(<span class="string">'password'</span>);</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'username:'</span>.$username.<span class="string">' password:'</span>.$password;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这时输入用户名和密码点击登录后，将显示如图。<br><img src="/20180404071856/d02-01.png" alt=""></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://task.fenv.net/2018/04/04/任务管理-day02/" data-id="cjfkb0yun0001kw7qrs8d5z8z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/04/03/任务管理-day01/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">任务管理-day01</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/CodeIgniter/" style="font-size: 10px;">CodeIgniter</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/任务管理/" style="font-size: 10px;">任务管理</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/04/任务管理-day02/">任务管理-day02</a>
+          </li>
+        
+          <li>
+            <a href="/2018/04/03/任务管理-day01/">任务管理-day01</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Wells<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+  
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  
+    <link href="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+  
+  
+  <script src="/js/script.js"></script>
+  
+
+  
+  </div>
+</body>
+</html>
