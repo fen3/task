@@ -7,18 +7,18 @@
   
   <title>任务管理-day03 | 任务管理开发记录</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="登录成功后要保存用户登录信息，可以用SESSION或Cookie。因为经常用到所以再 application/config/autoload.php增加自动加载。 1$autoload[&apos;libraries&apos;] = array(&apos;database&apos;, &apos;session&apos;); 那么dologin增加保存session的语句,并用redirect转到首页main1$_SESSION[&apos;user&apos;] =">
+  <meta name="description" content="登录成功后要保存用户登录信息，可以用SESSION或Cookie。因为经常用到所以再 application/config/autoload.php增加自动加载。 1$autoload[&apos;libraries&apos;] = array(&apos;database&apos;, &apos;session&apos;); application/config/config.php里 默认的file模式，需要设置保存路径。linux里简单的先设置">
 <meta name="keywords" content="任务管理,PHP,CodeIgniter">
 <meta property="og:type" content="article">
 <meta property="og:title" content="任务管理-day03">
 <meta property="og:url" content="http://task.fenv.net/2018/04/05/任务管理-day03/index.html">
 <meta property="og:site_name" content="任务管理开发记录">
-<meta property="og:description" content="登录成功后要保存用户登录信息，可以用SESSION或Cookie。因为经常用到所以再 application/config/autoload.php增加自动加载。 1$autoload[&apos;libraries&apos;] = array(&apos;database&apos;, &apos;session&apos;); 那么dologin增加保存session的语句,并用redirect转到首页main1$_SESSION[&apos;user&apos;] =">
+<meta property="og:description" content="登录成功后要保存用户登录信息，可以用SESSION或Cookie。因为经常用到所以再 application/config/autoload.php增加自动加载。 1$autoload[&apos;libraries&apos;] = array(&apos;database&apos;, &apos;session&apos;); application/config/config.php里 默认的file模式，需要设置保存路径。linux里简单的先设置">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-05T12:14:54.283Z">
+<meta property="og:updated_time" content="2018-04-05T14:12:05.761Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="任务管理-day03">
-<meta name="twitter:description" content="登录成功后要保存用户登录信息，可以用SESSION或Cookie。因为经常用到所以再 application/config/autoload.php增加自动加载。 1$autoload[&apos;libraries&apos;] = array(&apos;database&apos;, &apos;session&apos;); 那么dologin增加保存session的语句,并用redirect转到首页main1$_SESSION[&apos;user&apos;] =">
+<meta name="twitter:description" content="登录成功后要保存用户登录信息，可以用SESSION或Cookie。因为经常用到所以再 application/config/autoload.php增加自动加载。 1$autoload[&apos;libraries&apos;] = array(&apos;database&apos;, &apos;session&apos;); application/config/config.php里 默认的file模式，需要设置保存路径。linux里简单的先设置">
   
     <link rel="alternate" href="/atom.xml" title="任务管理开发记录" type="application/atom+xml">
   
@@ -86,6 +86,7 @@
       
         <p>登录成功后要保存用户登录信息，可以用SESSION或Cookie。<br>因为经常用到所以再 application/config/autoload.php增加自动加载。</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$autoload[<span class="string">'libraries'</span>] = <span class="keyword">array</span>(<span class="string">'database'</span>, <span class="string">'session'</span>);</span><br></pre></td></tr></table></figure>
+<p>application/config/config.php里 默认的file模式，需要设置保存路径。linux里简单的先设置为/tmp<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$config[<span class="string">'sess_save_path'</span>] = <span class="string">'/tmp'</span>;</span><br></pre></td></tr></table></figure></p>
 <p>那么dologin增加保存session的语句,并用redirect转到首页main<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$_SESSION[<span class="string">'user'</span>] = $user;</span><br></pre></td></tr></table></figure></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">dologin</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $username = <span class="keyword">$this</span>-&gt;input-&gt;post(<span class="string">'username'</span>);</span><br><span class="line">    $password = <span class="keyword">$this</span>-&gt;input-&gt;post(<span class="string">'password'</span>);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;load-&gt;model(<span class="string">'user_m'</span>);</span><br><span class="line">    $user = <span class="keyword">$this</span>-&gt;user_m-&gt;get_byusername($username);</span><br><span class="line">    <span class="keyword">if</span>(!is_null($user))&#123;</span><br><span class="line">        <span class="keyword">if</span>(password_verify($password, $user-&gt;password))&#123;</span><br><span class="line">            $_SESSION[<span class="string">'user'</span>] = $user;</span><br><span class="line">            redirect(<span class="string">'main'</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'密码错误'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'账号不存在'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>退出时清除SESSION，并跳转到登陆页login<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">unset</span>($_SESSION[<span class="string">'user'</span>]);</span><br><span class="line">    redirect(<span class="string">'login'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
@@ -103,6 +104,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/04/05/任务管理-day03p2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          任务管理-day03p2
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/04/任务管理-day02p2/" id="article-nav-older" class="article-nav-link-wrap">
@@ -126,7 +136,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP/">PHP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PHP-CodeIgniter/">PHP CodeIgniter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
     </div>
   </div>
 
@@ -136,7 +146,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/CodeIgniter/" style="font-size: 10px;">CodeIgniter</a> <a href="/tags/PHP/" style="font-size: 10px;">PHP</a> <a href="/tags/任务管理/" style="font-size: 10px;">任务管理</a>
+      <a href="/tags/CodeIgniter/" style="font-size: 15px;">CodeIgniter</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/PHP-CodeIgniter/" style="font-size: 10px;">PHP CodeIgniter</a> <a href="/tags/任务管理/" style="font-size: 20px;">任务管理</a>
     </div>
   </div>
 
@@ -156,6 +166,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/04/05/任务管理-day03p2/">任务管理-day03p2</a>
+          </li>
         
           <li>
             <a href="/2018/04/05/任务管理-day03/">任务管理-day03</a>
