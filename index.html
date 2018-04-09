@@ -59,6 +59,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-任务管理-day07p2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/09/任务管理-day07p2/" class="article-date">
+  <time datetime="2018-04-09T12:30:55.000Z" itemprop="datePublished">2018-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/09/任务管理-day07p2/">任务管理-day07p2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为页面都需要登录，所以在初始化时增加登录判断。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">parent</span>::__construct();</span><br><span class="line">    <span class="keyword">$this</span>-&gt;load-&gt;model(<span class="string">'task_m'</span>);</span><br><span class="line">    <span class="keyword">if</span>(!<span class="keyword">isset</span>($_SESSION[<span class="string">'user'</span>]))&#123;</span><br><span class="line">        redirect(<span class="string">'login'</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>任务智能查看自己的，那么在view里增加判断，添加后如下<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">view</span><span class="params">($id=<span class="number">0</span>)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>($id == <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'无效id'</span>;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        $task = <span class="keyword">$this</span>-&gt;task_m-&gt;get_byid($id);</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">isset</span>($task) &amp;&amp; $task-&gt;person == $_SESSION[<span class="string">'user'</span>]-&gt;cnname)&#123;</span><br><span class="line">            <span class="keyword">$this</span>-&gt;load-&gt;view(<span class="string">'view'</span>, <span class="keyword">array</span>(<span class="string">'task'</span>=&gt;$task));</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'不是你的任务！'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>设置为完成也只能又所有人设置，所以需要在update那增加判断。<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">($id)</span></span>&#123;</span><br><span class="line">    $task = <span class="keyword">$this</span>-&gt;task_m-&gt;get($id);</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">isset</span>($task) &amp;&amp; $task-&gt;person == $_SESSION[<span class="string">'user'</span>]-&gt;cnname)&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;task_m-&gt;set_finished($id))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'完成。'</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'操作失败。'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'只能由所有人操作！'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://task.fenv.net/2018/04/09/任务管理-day07p2/" data-id="cjfs87j330000os7qr4cuzm72" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-任务管理-day07" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/09/任务管理-day07/" class="article-date">
@@ -499,6 +540,10 @@
       <ul>
         
           <li>
+            <a href="/2018/04/09/任务管理-day07p2/">任务管理-day07p2</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/09/任务管理-day07/">任务管理-day07</a>
           </li>
         
@@ -512,10 +557,6 @@
         
           <li>
             <a href="/2018/04/06/任务管理-day04/">任务管理-day04</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/05/任务管理-day03p2/">任务管理-day03p2</a>
           </li>
         
       </ul>
