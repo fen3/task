@@ -59,6 +59,50 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-任务管理-day03" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/05/任务管理-day03/" class="article-date">
+  <time datetime="2018-04-05T11:46:25.000Z" itemprop="datePublished">2018-04-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/05/任务管理-day03/">任务管理-day03</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>登录成功后要保存用户登录信息，可以用SESSION或Cookie。<br>因为经常用到所以再 application/config/autoload.php增加自动加载。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$autoload[<span class="string">'libraries'</span>] = <span class="keyword">array</span>(<span class="string">'database'</span>, <span class="string">'session'</span>);</span><br></pre></td></tr></table></figure>
+<p>application/config/config.php里 默认的file模式，需要设置保存路径。linux里简单的先设置为/tmp<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$config[<span class="string">'sess_save_path'</span>] = <span class="string">'/tmp'</span>;</span><br></pre></td></tr></table></figure></p>
+<p>那么dologin增加保存session的语句,并用redirect转到首页main<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$_SESSION[<span class="string">'user'</span>] = $user;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">dologin</span><span class="params">()</span></span>&#123;</span><br><span class="line">    $username = <span class="keyword">$this</span>-&gt;input-&gt;post(<span class="string">'username'</span>);</span><br><span class="line">    $password = <span class="keyword">$this</span>-&gt;input-&gt;post(<span class="string">'password'</span>);</span><br><span class="line">    <span class="keyword">$this</span>-&gt;load-&gt;model(<span class="string">'user_m'</span>);</span><br><span class="line">    $user = <span class="keyword">$this</span>-&gt;user_m-&gt;get_byusername($username);</span><br><span class="line">    <span class="keyword">if</span>(!is_null($user))&#123;</span><br><span class="line">        <span class="keyword">if</span>(password_verify($password, $user-&gt;password))&#123;</span><br><span class="line">            $_SESSION[<span class="string">'user'</span>] = $user;</span><br><span class="line">            redirect(<span class="string">'main'</span>);</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'密码错误'</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'账号不存在'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>退出时清除SESSION，并跳转到登陆页login<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">logout</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">unset</span>($_SESSION[<span class="string">'user'</span>]);</span><br><span class="line">    redirect(<span class="string">'login'</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://task.fenv.net/2018/04/05/任务管理-day03/" data-id="cjfqyb4h200033w7qs0oc10tx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-任务管理-day02p2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/04/任务管理-day02p2/" class="article-date">
@@ -250,6 +294,10 @@
       <ul>
         
           <li>
+            <a href="/2018/04/14/任务管理-day11/">任务管理-day11</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/13/任务管理-day10/">任务管理-day10</a>
           </li>
         
@@ -263,10 +311,6 @@
         
           <li>
             <a href="/2018/04/09/任务管理-day07p2/">任务管理-day07p2</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/09/任务管理-day07/">任务管理-day07</a>
           </li>
         
       </ul>
