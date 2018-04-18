@@ -59,6 +59,47 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-任务管理-day06" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/08/任务管理-day06/" class="article-date">
+  <time datetime="2018-04-08T14:53:36.000Z" itemprop="datePublished">2018-04-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/08/任务管理-day06/">任务管理-day06</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>下面增加任务的查看和状态的修改（标识完成）。<br>先在controllers/Main.php 中增加 view($id) 方法如下,补充之前没写的__construct()<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">__construct</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">parent</span>::__construct();</span><br><span class="line">    <span class="keyword">$this</span>-&gt;load-&gt;model(<span class="string">'task_m'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">view</span><span class="params">($id=<span class="number">0</span>)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>($id == <span class="number">0</span>)&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="string">'无效id'</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            $task = <span class="keyword">$this</span>-&gt;task_m-&gt;get_byid($id);</span><br><span class="line">            <span class="keyword">$this</span>-&gt;load-&gt;view(<span class="string">'view'</span>, <span class="keyword">array</span>(<span class="string">'task'</span>=&gt;$task));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>增加 views/view.php 如下<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?php</span></span></span><br><span class="line"><span class="php">defined(<span class="string">'BASEPATH'</span>) <span class="keyword">OR</span> <span class="keyword">exit</span>(<span class="string">'No direct script access allowed'</span>);</span></span><br><span class="line"><span class="php"><span class="meta">?&gt;</span></span><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"zh_CN"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">title</span>&gt;</span>任务管理<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"container"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span>欢迎使用。<span class="php"><span class="meta">&lt;?</span>=$_SESSION[<span class="string">'user'</span>]-&gt;cnname;<span class="meta">?&gt;</span></span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"&lt;?=site_url('login/logout')?&gt;"</span>&gt;</span>登出<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"&lt;?=site_url('main/update')?&gt;"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"taskcontent"</span>&gt;</span>任务内容<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"taskcontent"</span> <span class="attr">readonly</span> <span class="attr">value</span>=<span class="string">"&lt;?=$task-&gt;content?&gt;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"endtime"</span>&gt;</span>到期时间<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">name</span>=<span class="string">"endtime"</span> <span class="attr">readonly</span> <span class="attr">value</span>=<span class="string">"&lt;?=$task-&gt;endtime?&gt;"</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">"level"</span>&gt;</span>紧急程度<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">select</span> <span class="attr">name</span>=<span class="string">"level"</span> <span class="attr">readonly</span>&gt;</span></span><br><span class="line">                &lt;option&lt;?php echo $task-&gt;level=='一般'?' selected':'';?&gt;&gt;一般&lt;/option&gt;</span><br><span class="line">                &lt;option&lt;?php echo $task-&gt;level=='紧急'?' selected':'';?&gt;&gt;紧急&lt;/option&gt;</span><br><span class="line">                &lt;option&lt;?php echo $task-&gt;level=='特急'?' selected':'';?&gt;&gt;特急&lt;/option&gt;</span><br><span class="line">            <span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"submit"</span> <span class="attr">value</span>=<span class="string">"提交"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>今天先这样，明天再补多点。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://task.fenv.net/2018/04/08/任务管理-day06/" data-id="cjfqyb4hh000a3w7q2c1hln5v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-任务管理-day05" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/07/任务管理-day05/" class="article-date">
@@ -421,6 +462,10 @@
       <ul>
         
           <li>
+            <a href="/2018/04/18/任务管理-day15/">任务管理-day15</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/17/任务管理-day14/">任务管理-day14</a>
           </li>
         
@@ -434,10 +479,6 @@
         
           <li>
             <a href="/2018/04/14/任务管理-day11/">任务管理-day11</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/13/任务管理-day10/">任务管理-day10</a>
           </li>
         
       </ul>
