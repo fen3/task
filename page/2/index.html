@@ -59,6 +59,48 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-任务管理-day07" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/09/任务管理-day07/" class="article-date">
+  <time datetime="2018-04-08T23:20:49.000Z" itemprop="datePublished">2018-04-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/09/任务管理-day07/">任务管理-day07</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>任务的表我们没有状态字段，那么需要在数据库增加字段。<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ALTER</span> <span class="keyword">TABLE</span> <span class="string">`t_task`</span></span><br><span class="line">	<span class="keyword">ADD</span> <span class="keyword">COLUMN</span> <span class="string">`status`</span> <span class="built_in">VARCHAR</span>(<span class="number">10</span>) <span class="keyword">NOT</span> <span class="literal">NULL</span> <span class="keyword">DEFAULT</span> <span class="string">'待跟进'</span> <span class="keyword">AFTER</span> <span class="string">`isdeleted`</span>;</span><br></pre></td></tr></table></figure></p>
+<p>下来在 models/Task_m.php 里增加<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">set_finished</span><span class="params">($id)</span></span>&#123;</span><br><span class="line">    <span class="keyword">$this</span>-&gt;db-&gt;set(<span class="string">'status'</span>, <span class="string">'完成'</span>)-&gt;where(<span class="string">'id'</span>, $id)-&gt;update(<span class="keyword">$this</span>-&gt;tbl);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">$this</span>-&gt;db-&gt;affected_rows()&gt;<span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>views/view.php提交到 main/update 那么的controllers/Main.php 里增加 update方法调用 上面的方法<br><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">function</span> <span class="title">update</span><span class="params">($id)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">$this</span>-&gt;task_m-&gt;set_finished($id))&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'完成。'</span>;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="string">'操作失败。'</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>至此大概就完成主要功能了。但还缺少一些检查。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://task.fenv.net/2018/04/09/任务管理-day07/" data-id="cjfrg8tms00000s7qmbsdslcq" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CodeIgniter/">CodeIgniter</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/任务管理/">任务管理</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-任务管理-day06" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/08/任务管理-day06/" class="article-date">
@@ -462,6 +504,10 @@
       <ul>
         
           <li>
+            <a href="/2018/04/19/任务管理-day16/">任务管理-day16</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/18/任务管理-day15/">任务管理-day15</a>
           </li>
         
@@ -475,10 +521,6 @@
         
           <li>
             <a href="/2018/04/15/任务管理-day12/">任务管理-day13</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/14/任务管理-day11/">任务管理-day11</a>
           </li>
         
       </ul>
